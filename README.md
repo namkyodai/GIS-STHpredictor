@@ -3,7 +3,7 @@ GIS-STHpredictor
 
 This repository contains source code of a plugin for QGIS. The plugin is coded to enable users to do temporal analysis using data stored in the shapefiles.
 
-Data on the shapefiles are baseline prevalence of species that are collected and measured by executing interventions or control programs. The species such as Hookworm are vectors causing the Soi Transmitted Dieases (STH).
+Data stored on shapefiles are baseline prevalence of species that are collected and measured by executing interventions or control programs. The species such as Hookworm are vectors causing the Soi Transmitted Dieases (STH).
 
 This plugin allows users to generate useful maps in chronological order. 
 
