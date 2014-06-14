@@ -78,19 +78,19 @@ def run(parameterContainer):
     print controlProgramF
 
     for t in range(time):
-        fieldDef = osgeo.ogr.FieldDefn("no_4_"+str(t), osgeo.ogr.OFTString)
+        fieldDef = osgeo.ogr.FieldDefn("no_4_"+str(t), osgeo.ogr.OFTReal)
         fieldDef.SetWidth(5)
         layer.CreateField(fieldDef)
-        fieldDef = osgeo.ogr.FieldDefn("li_4_"+str(t), osgeo.ogr.OFTString)
+        fieldDef = osgeo.ogr.FieldDefn("li_4_"+str(t), osgeo.ogr.OFTReal)
         fieldDef.SetWidth(5)
         layer.CreateField(fieldDef)
-        fieldDef = osgeo.ogr.FieldDefn("mo_4_"+str(t), osgeo.ogr.OFTString)
+        fieldDef = osgeo.ogr.FieldDefn("mo_4_"+str(t), osgeo.ogr.OFTReal)
         fieldDef.SetWidth(5)
         layer.CreateField(fieldDef)
-        fieldDef = osgeo.ogr.FieldDefn("he_4_"+str(t), osgeo.ogr.OFTString)
+        fieldDef = osgeo.ogr.FieldDefn("he_4_"+str(t), osgeo.ogr.OFTReal)
         fieldDef.SetWidth(5)
         layer.CreateField(fieldDef)
-        fieldDef = osgeo.ogr.FieldDefn("STH_4_"+str(t), osgeo.ogr.OFTString)
+        fieldDef = osgeo.ogr.FieldDefn("STH_4_"+str(t), osgeo.ogr.OFTReal)
         fieldDef.SetWidth(5)
         layer.CreateField(fieldDef)
 
