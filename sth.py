@@ -3,11 +3,11 @@
 /***************************************************************************
  STH
                                  A QGIS plugin
- STH
+ STH predictor
                               -------------------
         begin                : 2014-05-07
-        copyright            : (C) 2014 by STH
-        email                : STH@STH.STH
+        copyright            : (C) 2015 by Nam Lethanh
+        email                : namkyodai@gmail.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -29,16 +29,17 @@ import resources
 from sthdialog import STHDialog
 import os.path
 
+from osgeo import ogr
+
 from modules import module3, module4
 
 
 class ParameterContainer:
     def __init__(self):
         self.targetFileLocation = ""
+        self.categories = {'A': 11, 'B': 11, 'C': 11, 'D': 11, 'E': 11, 'F': 11}
 
-        self.categories = {'A': 10, 'B': 10, 'C': 10, 'D': 10, 'E': 10, 'F': 10}
-
-        self.timeStep = 10
+        self.timeStep = 11
 
     pass
 
@@ -64,6 +65,10 @@ class STH:
 
         # Create the dialog (after translation) and keep reference
         self.dlg = STHDialog()
+        
+        #self.sideLabel = QLabel()
+        #self.sideLabel.setTextFormat(Qt.RichText)
+        #self.sideLabel.setAlignment(Qt.AlignLeft | Qt.AlignTop)
 
     def initGui(self):
         # Create action that will start plugin configuration
@@ -78,7 +83,18 @@ class STH:
         self.iface.addPluginToMenu(u"&STH", self.action)
         
         self.dlg.pushButtonInput.clicked.connect(self.selectInputFile)
-        self.dlg.pushButtonOutput.clicked.connect(self.selectOutputFile)
+        self.dlg.pushButtonOutput.clicked.connect(self.selectOutputFolder)
+        
+        self.dlg.comboBoxModel.currentIndexChanged[str].connect(self.modelComboBoxChanged)
+        
+        #self.dlg.setSideWidget(QWidget())
+        #hbox = QHBoxLayout()
+        #hbox.addWidget(self.sideLabel)
+        #self.dlg.sideWidget().setLayout(hbox)
+        #self.sideLabel.setFixedWidth(100)
+        #self.sideLabel.setWordWrap(True)
+        #self.sideLabel.setText("Help:<br>")
+
         
 
     def unload(self):
@@ -97,8 +113,8 @@ class STH:
         if result == 1:
 
             # Output of selected data START
-            qDebug("Input file is located at: "+self.dlg.lineEditInput.displayText())
-            qDebug("Output file is located att: "+self.dlg.lineEditOutput.displayText())
+            qDebug("Input file is located at: "  + self.dlg.lineEditInputFileName.displayText())
+            qDebug("Output file is located at: " + self.dlg.lineEditOutputFolder.displayText() + "/" + self.dlg.lineEditOutputFileName.displayText())
             
             
             qDebug("Category A is: "+self.dlg.comboBoxA.currentText())
@@ -120,8 +136,10 @@ class STH:
 
             # Copy QgsFile
 
-            inputFileLocation = self.dlg.lineEditInput.displayText()
-            outputFileLocation = self.dlg.lineEditOutput.displayText()
+            inputFileLocation = self.dlg.lineEditInputFileName.displayText()
+            outputFileLocation = self.dlg.lineEditOutputFolder.displayText() + "/" + self.dlg.lineEditOutputFileName.displayText()
+            if (outputFileLocation.endswith(".shp") == False):
+	        outputFileLocation = outputFileLocation + ".shp"
 
 
             inputLayer = QgsVectorLayer(inputFileLocation, "input_layer", "ogr")
@@ -144,11 +162,11 @@ class STH:
 
 
             # Run model
-            if (self.dlg.comboBoxModel.currentText() == "Model 3"):
+            if (self.dlg.comboBoxModel.currentText() == "STH prevalance"):
                 qDebug("Model 3 was chosen")
                 module3.run(parameterContainer)
 
-            elif (self.dlg.comboBoxModel.currentText() == "Model 4"):
+            elif (self.dlg.comboBoxModel.currentText() == "Total prevalance"):
                 qDebug("Model 4 was chosen")
                 module4.run(parameterContainer)
 
@@ -159,10 +177,131 @@ class STH:
 
     def selectInputFile(self):
         fileName = QFileDialog.getOpenFileName(self.dlg, "Load Shapefile", ".", "Shapefile (*.shp)");
-        self.dlg.lineEditInput.setText(fileName)
+
+	self.checkShapefileConsistency(fileName, self.dlg.comboBoxModel.currentText())
+	
+        
+        self.dlg.lineEditInputFileName.setText(fileName)
         pass
 
-    def selectOutputFile(self):
-        fileName = QFileDialog.getOpenFileName(self.dlg, "Write Shapefile", ".", "Shapefile (*.shp)");
-        self.dlg.lineEditOutput.setText(fileName)
+    def selectOutputFolder(self):
+        folderName = QFileDialog.getExistingDirectory(self.dlg, "Select Output Folder");
+        self.dlg.lineEditOutputFolder.setText(folderName)
         pass
+      
+      
+    def checkShapefileConsistency(self, fileName, modelName):
+        # ------------------------- #
+        # validate input file START #
+        # ------------------------- #      
+        
+        shapefile = ogr.Open(fileName, 0)
+        
+        # check if file is valid
+
+        if shapefile is None:
+           QMessageBox.warning(None, "Shapefile load error.", "Please select a valid Shapefile.")
+           
+        pureFileName = os.path.splitext(os.path.basename(fileName))[0]
+
+        lyr = shapefile.GetLayer(0)
+        lyrDef = lyr.GetLayerDefn()
+        
+        
+        categoryFound = False
+        categoryIsString = False
+        for i in range(lyrDef.GetFieldCount()):
+	  if (lyrDef.GetFieldDefn(i).GetName() == "CATEGORY"):
+	    found = True
+	    if (lyrDef.GetFieldDefn(i).GetType() == ogr.OFTString):
+	      categoryIsString = True
+	
+	lyr.ResetReading()
+        
+        # check if CATEGORY is present
+        if (found == False):
+           QMessageBox.warning(None, "Shapefile load error.", "The shapefile does not have a field named CATEGORY.")
+        
+        # check if CATEGORY is of type string
+        if (categoryIsString == False):
+           QMessageBox.warning(None, "Shapefile load error.", "The shapefile has a field named CATEGORY but it is not of type Text.")
+        
+        
+        possiblyProblematicFeatures = []
+        # check if there are any missing or invalid entries in CATEGORY
+        for i in range(lyr.GetFeatureCount()):
+           feature=lyr.GetFeature(i)
+           featureCategory = feature.GetField("CATEGORY")
+           
+           
+           if (featureCategory not in ["A", "B", "C", "D", "E", "F"]):
+              possiblyProblematicFeatures.append(feature.GetFID())
+
+	lyr.ResetReading()
+        
+        # invalid features
+        if (len(possiblyProblematicFeatures)>0):
+           QMessageBox.warning(None, "Shapefile load warning.", "The shapefile has a field named CATEGORY but the following features have an invalid CATEGORY field. Feature IDs are: " + ",".join(possiblyProblematicFeatures))
+        
+        numericFields = []
+        numericFieldsPresent = []
+        if (modelName == "Model 4"):
+	    numericFields = ["STH"]
+	    numericFieldsPresent = [False]
+	
+        if (modelName == "Model 3"):
+	    numericFields = ["HW_3", "Tt_3", "Al_3"]
+	    numericFieldsPresent = [False, False, False]
+        
+        # check if mandatory numeric fields exist
+        for i in range(lyrDef.GetFieldCount()):
+	  if (lyrDef.GetFieldDefn(i).GetName() in numericFields):
+	    numericFieldsPresent[numericFields.index(lyrDef.GetFieldDefn(i).GetName())] = True
+        
+        missingNumericFields = []
+        for index in range(0, len(numericFieldsPresent)):
+	  if (numericFieldsPresent[index] == False):
+	    missingNumericFields.append(numericFields[index])
+        
+        if (len(missingNumericFields)>0):
+           QMessageBox.warning(None, "Shapefile load error.", "Check that all mandatory numeric fields are present. Missing field names are: " + ",".join(missingNumericFields))
+        
+        # check if mandatory numeric fields are numeric
+        problematicFields = []
+        
+        for i in range(lyrDef.GetFieldCount()):
+	  if (lyrDef.GetFieldDefn(i).GetName() in numericFields):
+	    if (lyrDef.GetFieldDefn(i).GetType() != ogr.OFTInteger and lyrDef.GetFieldDefn(i).GetType() != ogr.OFTReal):
+	      problematicFields.append(lyrDef.GetFieldDefn(i).GetName())
+        
+        if (len(problematicFields)>0):
+           QMessageBox.warning(None, "Shapefile load warning.", "Check the numeric fields in your shapefile. Some of them are not numeric. Field names are: " + ",".join(problematicFields))
+
+
+        # check for validity in numeric fields
+        wrongValueFeatures = []
+        for numericFieldName in numericFields:
+	   lyr.ResetReading()
+           for i in range(lyr.GetFeatureCount()):
+              feature=lyr.GetFeature(i)
+              featureValue = feature.GetField(numericFieldName)
+              if (featureValue < 0 or featureValue > 1):
+                 wrongValueFeatures.append(feature.GetFID())
+        
+        if (len(wrongValueFeatures)>0):
+	  QMessageBox.warning(None, "Shapefile load warning.", "Check the numeric fields in your shapefile. Some features have values outside the range [0, 1].")
+          #QMessageBox.warning(None, "Shapefile load warning.", "Please check the numeric fields in your shapefile. Some features have values outside the range [0, 100]. Feature IDs are: " + ",".join(possiblyProblematicFeatures))
+
+	
+        # ------------------------- #
+        # validate input file STOP  #
+        # ------------------------- # 
+        
+    def modelComboBoxChanged(self, modelName):
+        if self.dlg.lineEditInputFileName.displayText() == "":
+	  return
+	
+	print modelName
+	
+	self.checkShapefileConsistency(self.dlg.lineEditInputFileName.displayText(), modelName)
+        

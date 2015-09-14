@@ -1,1 +1,0 @@
-module3.py und module4.py sind in keinen Funktionen gegliedert, daher kann ich die Funktionen nicht aus dem Plugin heraus benutzen. Der nächste Schritt ist also die Skripte in Funktionen zu integrieren.

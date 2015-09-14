@@ -6,143 +6,175 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>328</width>
-    <height>300</height>
+    <width>662</width>
+    <height>386</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Wizard</string>
+   <string>STH prediction</string>
+  </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
   </property>
   <widget class="QWizardPage" name="wizardPage1">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QLabel" name="labelInput">
-        <property name="text">
-         <string>Input-File:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_11">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="lineEditInput">
-        <property name="minimumSize">
-         <size>
-          <width>120</width>
-          <height>0</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonInput">
-        <property name="text">
-         <string>Select</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string>Input</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="labelInput">
+         <property name="toolTip">
+          <string>Select the input shapefile</string>
+         </property>
+         <property name="text">
+          <string>File-Name:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEditInputFileName">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>The chosen file name.</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonInput">
+         <property name="toolTip">
+          <string>Select the input shapefile</string>
+         </property>
+         <property name="text">
+          <string>Select</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Output-File:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_12">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="lineEditOutput">
-        <property name="minimumSize">
-         <size>
-          <width>120</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonOutput">
-        <property name="text">
-         <string>Select</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="title">
+       <string>Output</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="toolTip">
+            <string>Choose a output folder to place the simulation results inside.</string>
+           </property>
+           <property name="text">
+            <string>Output-Folder: </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelFileName">
+           <property name="toolTip">
+            <string>Set the name of the result file.</string>
+           </property>
+           <property name="text">
+            <string>File-Name:</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLineEdit" name="lineEditOutputFolder">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Location of the output folder.</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButtonOutput">
+             <property name="toolTip">
+              <string>Select the output folder</string>
+             </property>
+             <property name="text">
+              <string>Select</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditOutputFileName">
+           <property name="toolTip">
+            <string>your desired name of the output shapefile</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QLabel" name="labelControlProgram">
-        <property name="text">
-         <string>Model:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QComboBox" name="comboBoxModel">
-        <property name="minimumSize">
-         <size>
-          <width>120</width>
-          <height>0</height>
-         </size>
-        </property>
-        <item>
-         <property name="text">
-          <string>Model 3</string>
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="title">
+       <string>Models</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
+       <item>
+        <widget class="QLabel" name="labelControlProgram">
+         <property name="toolTip">
+          <string>Select the model you would like to use. Model 3 uses... Model 4 uses...</string>
          </property>
-        </item>
-        <item>
          <property name="text">
-          <string>Model 4</string>
+          <string>Select a model for simulation</string>
          </property>
-        </item>
-       </widget>
-      </item>
-     </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBoxModel">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Total prevalance is used when only total prevalances of the STH are known.&lt;/p&gt;&lt;p&gt;STH prevalance is used when intensities of the STH are known.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Total prevalance</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>STH prevalance</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -152,8 +184,11 @@
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
        <widget class="QLabel" name="labelA">
+        <property name="toolTip">
+         <string/>
+        </property>
         <property name="text">
-         <string>A</string>
+         <string>0%   &lt;=  Total prevalance &lt; 1%</string>
         </property>
        </widget>
       </item>
@@ -172,54 +207,62 @@
       </item>
       <item>
        <widget class="QComboBox" name="comboBoxA">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;CP stands for Control Program. Each CP refers to a strategy as a combination of type of drug and frequency of distribution.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;CP1 is default when total prevalance &amp;lt; 1%&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;- CP1 refers to administration of anthelminthic (ALB) twice a year&lt;/p&gt;&lt;p&gt;- CP2 refers to administration of mebendazole (MEB) twice a year&lt;/p&gt;&lt;p&gt;- CP3 refers to administration of ALB once a year&lt;/p&gt;&lt;p&gt;- CP4 refers to administration of MEB once a year&lt;/p&gt;&lt;p&gt;- CP5 refers to administration of ALB in the context of lymphatic filariasis (LF) with 6 months interval&lt;/p&gt;&lt;p&gt;- CP6 refers to administration of ALB in the context of lymphatic filariasis (LF) + MEB with 6 months interval&lt;/p&gt;&lt;p&gt;- CP7 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with 6 months interval&lt;/p&gt;&lt;p&gt;- CP8 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with 6 months interval&lt;/p&gt;&lt;p&gt;- CP9 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with one year interval&lt;/p&gt;&lt;p&gt;- CP10 refers to administration of ALB in the context of lymphatic filariasis (LF) + IVR with one year interval&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <item>
          <property name="text">
-          <string>1</string>
+          <string>No intervention</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>2</string>
+          <string>CP1</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>3</string>
+          <string>CP2</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>4</string>
+          <string>CP3</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>5</string>
+          <string>CP4</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>6</string>
+          <string>CP5</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>7</string>
+          <string>CP6</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>8</string>
+          <string>CP7</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>9</string>
+          <string>CP8</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>10</string>
+          <string>CP9</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CP10</string>
          </property>
         </item>
        </widget>
@@ -230,8 +273,11 @@
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
        <widget class="QLabel" name="labelB">
+        <property name="toolTip">
+         <string/>
+        </property>
         <property name="text">
-         <string>B</string>
+         <string>1%    &lt;= Total prevalance &lt; 10%</string>
         </property>
        </widget>
       </item>
@@ -250,54 +296,62 @@
       </item>
       <item>
        <widget class="QComboBox" name="comboBoxB">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;CP stands for Control Program. Each CP refers to a strategy as a combination of type of drug and frequency of distribution.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;CP2 is default when 1% &amp;lt;= Total prevalance &amp;lt; 10%&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;- CP1 refers to administration of anthelminthic (ALB) twice a year&lt;/p&gt;&lt;p&gt;- CP2 refers to administration of mebendazole (MEB) twice a year&lt;/p&gt;&lt;p&gt;- CP3 refers to administration of ALB once a year&lt;/p&gt;&lt;p&gt;- CP4 refers to administration of MEB once a year&lt;/p&gt;&lt;p&gt;- CP5 refers to administration of ALB in the context of lymphatic filariasis (LF) with 6 months interval&lt;/p&gt;&lt;p&gt;- CP6 refers to administration of ALB in the context of lymphatic filariasis (LF) + MEB with 6 months interval&lt;/p&gt;&lt;p&gt;- CP7 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with 6 months interval&lt;/p&gt;&lt;p&gt;- CP8 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with 6 months interval&lt;/p&gt;&lt;p&gt;- CP9 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with one year interval&lt;/p&gt;&lt;p&gt;- CP10 refers to administration of ALB in the context of lymphatic filariasis (LF) + IVR with one year interval&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <item>
          <property name="text">
-          <string>1</string>
+          <string>No intervention</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>2</string>
+          <string>CP1</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>3</string>
+          <string>CP2</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>4</string>
+          <string>CP3</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>5</string>
+          <string>CP4</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>6</string>
+          <string>CP5</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>7</string>
+          <string>CP6</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>8</string>
+          <string>CP7</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>9</string>
+          <string>CP8</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>10</string>
+          <string>CP9</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CP10</string>
          </property>
         </item>
        </widget>
@@ -308,8 +362,11 @@
      <layout class="QHBoxLayout" name="horizontalLayout_6">
       <item>
        <widget class="QLabel" name="labelC">
+        <property name="toolTip">
+         <string/>
+        </property>
         <property name="text">
-         <string>C</string>
+         <string>10% &lt;= Total prevalance &lt; 20%</string>
         </property>
        </widget>
       </item>
@@ -328,54 +385,62 @@
       </item>
       <item>
        <widget class="QComboBox" name="comboBoxC">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;CP stands for Control Program. Each CP refers to a strategy as a combination of type of drug and frequency of distribution.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;CP3 is default when 10% &amp;lt;= Total prevalance &amp;lt; 20%&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;&lt;br/&gt;&lt;/span&gt;- CP1 refers to administration of anthelminthic (ALB) twice a year&lt;/p&gt;&lt;p&gt;- CP2 refers to administration of mebendazole (MEB) twice a year&lt;/p&gt;&lt;p&gt;- CP3 refers to administration of ALB once a year&lt;/p&gt;&lt;p&gt;- CP4 refers to administration of MEB once a year&lt;/p&gt;&lt;p&gt;- CP5 refers to administration of ALB in the context of lymphatic filariasis (LF) with 6 months interval&lt;/p&gt;&lt;p&gt;- CP6 refers to administration of ALB in the context of lymphatic filariasis (LF) + MEB with 6 months interval&lt;/p&gt;&lt;p&gt;- CP7 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with 6 months interval&lt;/p&gt;&lt;p&gt;- CP8 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with 6 months interval&lt;/p&gt;&lt;p&gt;- CP9 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with one year interval&lt;/p&gt;&lt;p&gt;- CP10 refers to administration of ALB in the context of lymphatic filariasis (LF) + IVR with one year interval&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <item>
          <property name="text">
-          <string>1</string>
+          <string>No intervention</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>2</string>
+          <string>CP1</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>3</string>
+          <string>CP2</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>4</string>
+          <string>CP3</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>5</string>
+          <string>CP4</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>6</string>
+          <string>CP5</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>7</string>
+          <string>CP6</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>8</string>
+          <string>CP7</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>9</string>
+          <string>CP8</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>10</string>
+          <string>CP9</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CP10</string>
          </property>
         </item>
        </widget>
@@ -386,8 +451,11 @@
      <layout class="QHBoxLayout" name="horizontalLayout_7">
       <item>
        <widget class="QLabel" name="labelD">
+        <property name="toolTip">
+         <string/>
+        </property>
         <property name="text">
-         <string>D</string>
+         <string>20% &lt;= Total prevalance &lt; 50%</string>
         </property>
        </widget>
       </item>
@@ -406,54 +474,62 @@
       </item>
       <item>
        <widget class="QComboBox" name="comboBoxD">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;CP stands for Control Program. Each CP refers to a strategy as a combination of type of drug and frequency of distribution.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;CP4 is default when 20% &amp;lt;= Total prevalance &amp;lt; 50%&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;&lt;br/&gt;&lt;/span&gt;- CP1 refers to administration of anthelminthic (ALB) twice a year&lt;/p&gt;&lt;p&gt;- CP2 refers to administration of mebendazole (MEB) twice a year&lt;/p&gt;&lt;p&gt;- CP3 refers to administration of ALB once a year&lt;/p&gt;&lt;p&gt;- CP4 refers to administration of MEB once a year&lt;/p&gt;&lt;p&gt;- CP5 refers to administration of ALB in the context of lymphatic filariasis (LF) with 6 months interval&lt;/p&gt;&lt;p&gt;- CP6 refers to administration of ALB in the context of lymphatic filariasis (LF) + MEB with 6 months interval&lt;/p&gt;&lt;p&gt;- CP7 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with 6 months interval&lt;/p&gt;&lt;p&gt;- CP8 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with 6 months interval&lt;/p&gt;&lt;p&gt;- CP9 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with one year interval&lt;/p&gt;&lt;p&gt;- CP10 refers to administration of ALB in the context of lymphatic filariasis (LF) + IVR with one year interval&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <item>
          <property name="text">
-          <string>1</string>
+          <string>CP3</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>2</string>
+          <string>CP1</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>3</string>
+          <string>CP2</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>4</string>
+          <string>CP4</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>5</string>
+          <string>CP5</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>6</string>
+          <string>CP6</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>7</string>
+          <string>CP7</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>8</string>
+          <string>CP8</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>9</string>
+          <string>CP9</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>10</string>
+          <string>CP10</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>No intervention</string>
          </property>
         </item>
        </widget>
@@ -465,7 +541,7 @@
       <item>
        <widget class="QLabel" name="labelE">
         <property name="text">
-         <string>E</string>
+         <string>50% &lt;= Total prevalance &lt; 70%</string>
         </property>
        </widget>
       </item>
@@ -484,54 +560,62 @@
       </item>
       <item>
        <widget class="QComboBox" name="comboBoxE">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;CP stands for Control Program. Each CP refers to a strategy as a combination of type of drug and frequency of distribution.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;CP5 is default when 50% &amp;lt;= Total prevalance &amp;lt; 70%&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;- CP1 refers to administration of anthelminthic (ALB) twice a year&lt;/p&gt;&lt;p&gt;- CP2 refers to administration of mebendazole (MEB) twice a year&lt;/p&gt;&lt;p&gt;- CP3 refers to administration of ALB once a year&lt;/p&gt;&lt;p&gt;- CP4 refers to administration of MEB once a year&lt;/p&gt;&lt;p&gt;- CP5 refers to administration of ALB in the context of lymphatic filariasis (LF) with 6 months interval&lt;/p&gt;&lt;p&gt;- CP6 refers to administration of ALB in the context of lymphatic filariasis (LF) + MEB with 6 months interval&lt;/p&gt;&lt;p&gt;- CP7 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with 6 months interval&lt;/p&gt;&lt;p&gt;- CP8 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with 6 months interval&lt;/p&gt;&lt;p&gt;- CP9 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with one year interval&lt;/p&gt;&lt;p&gt;- CP10 refers to administration of ALB in the context of lymphatic filariasis (LF) + IVR with one year interval&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <item>
          <property name="text">
-          <string>1</string>
+          <string>CP1</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>2</string>
+          <string>CP2</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>3</string>
+          <string>CP3</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>4</string>
+          <string>CP4</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>5</string>
+          <string>CP5</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>6</string>
+          <string>CP6</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>7</string>
+          <string>CP7</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>8</string>
+          <string>CP8</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>9</string>
+          <string>CP9</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>10</string>
+          <string>CP10</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>No intervention</string>
          </property>
         </item>
        </widget>
@@ -542,8 +626,11 @@
      <layout class="QHBoxLayout" name="horizontalLayout_9">
       <item>
        <widget class="QLabel" name="labelF">
+        <property name="toolTip">
+         <string/>
+        </property>
         <property name="text">
-         <string>F</string>
+         <string>70% &lt;= Total prevalance &lt;= 100%</string>
         </property>
        </widget>
       </item>
@@ -562,54 +649,62 @@
       </item>
       <item>
        <widget class="QComboBox" name="comboBoxF">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;CP stands for Control Program. Each CP refers to a strategy as a combination of type of drug and frequency of distribution.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline; color:#ff0000;&quot;&gt;CP6 is default when 70% &amp;lt;= Total prevalance &amp;lt;= 100%&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;- CP1 refers to administration of anthelminthic (ALB) twice a year&lt;/p&gt;&lt;p&gt;- CP2 refers to administration of mebendazole (MEB) twice a year&lt;/p&gt;&lt;p&gt;- CP3 refers to administration of ALB once a year&lt;/p&gt;&lt;p&gt;- CP4 refers to administration of MEB once a year&lt;/p&gt;&lt;p&gt;- CP5 refers to administration of ALB in the context of lymphatic filariasis (LF) with 6 months interval&lt;/p&gt;&lt;p&gt;- CP6 refers to administration of ALB in the context of lymphatic filariasis (LF) + MEB with 6 months interval&lt;/p&gt;&lt;p&gt;- CP7 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with 6 months interval&lt;/p&gt;&lt;p&gt;- CP8 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with 6 months interval&lt;/p&gt;&lt;p&gt;- CP9 refers to administration of ALB in the context of lymphatic filariasis (LF) + DEC with one year interval&lt;/p&gt;&lt;p&gt;- CP10 refers to administration of ALB in the context of lymphatic filariasis (LF) + IVR with one year interval&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <item>
          <property name="text">
-          <string>1</string>
+          <string>CP1</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>2</string>
+          <string>CP2</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>3</string>
+          <string>CP3</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>4</string>
+          <string>CP4</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>5</string>
+          <string>CP5</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>6</string>
+          <string>CP6</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>7</string>
+          <string>CP7</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>8</string>
+          <string>CP8</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>9</string>
+          <string>CP9</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>10</string>
+          <string>CP10</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>No intervention</string>
          </property>
         </item>
        </widget>
@@ -621,7 +716,7 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Time step (hours):</string>
+         <string>Numbers of years used for prediction</string>
         </property>
        </widget>
       </item>
@@ -639,7 +734,14 @@
        </spacer>
       </item>
       <item>
-       <widget class="QSpinBox" name="spinBoxTimeStep"/>
+       <widget class="QSpinBox" name="spinBoxTimeStep">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter here the numbers of years. &lt;/p&gt;&lt;p&gt;The defaul value is 10 years&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="value">
+         <number>10</number>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

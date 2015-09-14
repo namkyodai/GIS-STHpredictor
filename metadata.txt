@@ -9,12 +9,12 @@
 
 
 [general]
-name=STH
+name=STH predictor
 qgisMinimumVersion=2.0
-description=STH
-version=0.1
-author=STH
-email=STH@STH.STH
+description= a QGIS plugin to predict future prevalance of the STH
+version=2.0
+author=Nam Lethanh
+email=namkyodai@gmail.com
 
 # end of mandatory metadata
 
@@ -26,9 +26,9 @@ email=STH@STH.STH
 # tags are comma separated with spaces allowed
 tags=
 
-homepage=
+homepage= https://github.com/namkyodai
 tracker=
-repository=
+repository=https://github.com/namkyodai/GIS-STHpredictor
 icon=icon.png
 # experimental flag
 experimental=False

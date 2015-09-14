@@ -9,7 +9,7 @@ import numpy as np
 
 
 #define the variable of the model
-time=20
+time=100 #maximum numbers of year for the program to 
 breakpoint1=5
 breakpoint2=10
 
@@ -26,26 +26,28 @@ from prediction import prediction
 import mtp4 #the file contain the pre-defined markov transition probability for model 4
 
 def getControlProgram(value):
-    if value == "1":
+    if value == "CP1":
         return mtp4.mtp_cp1
-    elif value == "2":
+    elif value == "CP2":
         return mtp4.mtp_cp2
-    elif value == "3":
+    elif value == "CP3":
         return mtp4.mtp_cp3
-    elif value == "4":
+    elif value == "CP4":
         return mtp4.mtp_cp4
-    elif value == "5":
+    elif value == "CP5":
         return mtp4.mtp_cp5
-    elif value == "6":
+    elif value == "CP6":
         return mtp4.mtp_cp6
-    elif value == "7":
+    elif value == "CP7":
         return mtp4.mtp_cp7
-    elif value == "8":
+    elif value == "CP8":
         return mtp4.mtp_cp8
-    elif value == "9":
+    elif value == "CP9":
         return mtp4.mtp_cp9
-    elif value == "10":
+    elif value == "CP10":
         return mtp4.mtp_cp10
+    elif value == "No intervention":
+        return mtp4.mtp_cpdn
 
 def run(parameterContainer):
     # Open the source shapefile.
@@ -77,46 +79,38 @@ def run(parameterContainer):
     print controlProgramE
     print controlProgramF
 
-    for t in range(time):
-        fieldDef = osgeo.ogr.FieldDefn("no_4_"+str(t), osgeo.ogr.OFTReal)
-        fieldDef.SetWidth(5)
-        layer.CreateField(fieldDef)
-        fieldDef = osgeo.ogr.FieldDefn("li_4_"+str(t), osgeo.ogr.OFTReal)
-        fieldDef.SetWidth(5)
-        layer.CreateField(fieldDef)
-        fieldDef = osgeo.ogr.FieldDefn("mo_4_"+str(t), osgeo.ogr.OFTReal)
-        fieldDef.SetWidth(5)
-        layer.CreateField(fieldDef)
-        fieldDef = osgeo.ogr.FieldDefn("he_4_"+str(t), osgeo.ogr.OFTReal)
-        fieldDef.SetWidth(5)
-        layer.CreateField(fieldDef)
-        fieldDef = osgeo.ogr.FieldDefn("STH_4_"+str(t), osgeo.ogr.OFTReal)
-        fieldDef.SetWidth(5)
-        layer.CreateField(fieldDef)
+
+    words = ['STHyear', 'noyear', 'lightyear', 'moderyear', 'highyear']
+    for i in words:
+        for t in range(time):
+            fieldDef = osgeo.ogr.FieldDefn(i+str(t), osgeo.ogr.OFTReal)
+            #fieldDef.SetWidth(5)
+            layer.CreateField(fieldDef)
 
 
     for i in range(layer.GetFeatureCount()):
         feature=layer.GetFeature(i)
         layer.SetFeature(feature)
 
-        feature.SetField("STH_m4", randint(0,100))
+        #feature.SetField("STH", randint(0,100))
+	feature.SetField("STH", feature.GetField("STH")*100)
         #now estimate the intensity at t=0
 
         if feature.GetField("CATEGORY") == "A":
-
+	    
 
             for t in range(time):
                 if t==0:
-                    STH_m4=feature.GetField("STH_m4")
-                    cs1=model4no(float(STH_m4))
-                    cs2=model4light(float(STH_m4))
-                    cs3=model4moderate(float(STH_m4))
-                    cs4=model4high(float(STH_m4))
-                    feature.SetField("no_4_"+str(t), cs1)
-                    feature.SetField("li_4_"+str(t), cs2)
-                    feature.SetField("mo_4_"+str(t), cs3)
-                    feature.SetField("he_4_"+str(t), cs4)
-                    feature.SetField("STH_4_"+str(t), cs2+cs3+cs4)
+                    STH=feature.GetField("STH")
+                    cs1=model4no(STH)
+                    cs2=model4light(STH)
+                    cs3=model4moderate(STH)
+                    cs4=model4high(STH)
+                    feature.SetField("noyear"+str(t), cs1)
+                    feature.SetField("lightyear"+str(t), cs2)
+                    feature.SetField("moderyear"+str(t), cs3)
+                    feature.SetField("highyear"+str(t), cs4)
+                    feature.SetField("STHyear"+str(t), cs2+cs3+cs4)
                     cs=np.array([cs1,cs2,cs3,cs4])
 
 
@@ -134,12 +128,11 @@ def run(parameterContainer):
                     cs3=value[t][2]
                     cs4=value[t][3]
 
-                    feature.SetField("no_4_"+str(t), cs1)
-                    feature.SetField("li_4_"+str(t), cs2)
-                    feature.SetField("mo_4_"+str(t), cs3)
-                    feature.SetField("he_4_"+str(t), cs4)
-                    feature.SetField("STH_4_"+str(t), cs2+cs3+cs4)
-
+                    feature.SetField("noyear"+str(t), cs1)
+                    feature.SetField("lightyear"+str(t), cs2)
+                    feature.SetField("moderyear"+str(t), cs3)
+                    feature.SetField("highyear"+str(t), cs4)
+                    feature.SetField("STHyear"+str(t), cs2+cs3+cs4)
 
 
 
@@ -148,16 +141,16 @@ def run(parameterContainer):
 
             for t in range(time):
                 if t==0:
-                    STH_m4=feature.GetField("STH_m4")
-                    cs1=model4no(float(STH_m4))
-                    cs2=model4light(float(STH_m4))
-                    cs3=model4moderate(float(STH_m4))
-                    cs4=model4high(float(STH_m4))
-                    feature.SetField("no_4_"+str(t), cs1)
-                    feature.SetField("li_4_"+str(t), cs2)
-                    feature.SetField("mo_4_"+str(t), cs3)
-                    feature.SetField("he_4_"+str(t), cs4)
-                    feature.SetField("STH_4_"+str(t), cs2+cs3+cs4)
+                    STH=feature.GetField("STH")
+                    cs1=model4no(float(STH))
+                    cs2=model4light(float(STH))
+                    cs3=model4moderate(float(STH))
+                    cs4=model4high(float(STH))
+                    feature.SetField("noyear"+str(t), cs1)
+                    feature.SetField("lightyear"+str(t), cs2)
+                    feature.SetField("moderyear"+str(t), cs3)
+                    feature.SetField("highyear"+str(t), cs4)
+                    feature.SetField("STHyear"+str(t), cs2+cs3+cs4)
                     cs=np.array([cs1,cs2,cs3,cs4])
 
 
@@ -175,12 +168,11 @@ def run(parameterContainer):
                     cs3=value[t][2]
                     cs4=value[t][3]
 
-                    feature.SetField("no_4_"+str(t), cs1)
-                    feature.SetField("li_4_"+str(t), cs2)
-                    feature.SetField("mo_4_"+str(t), cs3)
-                    feature.SetField("he_4_"+str(t), cs4)
-                    feature.SetField("STH_4_"+str(t), cs2+cs3+cs4)
-
+                    feature.SetField("noyear"+str(t), cs1)
+                    feature.SetField("lightyear"+str(t), cs2)
+                    feature.SetField("moderyear"+str(t), cs3)
+                    feature.SetField("highyear"+str(t), cs4)
+                    feature.SetField("STHyear"+str(t), cs2+cs3+cs4)
 
 
 
@@ -189,16 +181,16 @@ def run(parameterContainer):
 
             for t in range(time):
                 if t==0:
-                    STH_m4=feature.GetField("STH_m4")
-                    cs1=model4no(float(STH_m4))
-                    cs2=model4light(float(STH_m4))
-                    cs3=model4moderate(float(STH_m4))
-                    cs4=model4high(float(STH_m4))
-                    feature.SetField("no_4_"+str(t), cs1)
-                    feature.SetField("li_4_"+str(t), cs2)
-                    feature.SetField("mo_4_"+str(t), cs3)
-                    feature.SetField("he_4_"+str(t), cs4)
-                    feature.SetField("STH_4_"+str(t), cs2+cs3+cs4)
+                    STH=feature.GetField("STH")
+                    cs1=model4no(float(STH))
+                    cs2=model4light(float(STH))
+                    cs3=model4moderate(float(STH))
+                    cs4=model4high(float(STH))
+                    feature.SetField("noyear"+str(t), cs1)
+                    feature.SetField("lightyear"+str(t), cs2)
+                    feature.SetField("moderyear"+str(t), cs3)
+                    feature.SetField("highyear"+str(t), cs4)
+                    feature.SetField("STHyear"+str(t), cs2+cs3+cs4)
                     cs=np.array([cs1,cs2,cs3,cs4])
 
 
@@ -216,11 +208,11 @@ def run(parameterContainer):
                     cs3=value[t][2]
                     cs4=value[t][3]
 
-                    feature.SetField("no_4_"+str(t), cs1)
-                    feature.SetField("li_4_"+str(t), cs2)
-                    feature.SetField("mo_4_"+str(t), cs3)
-                    feature.SetField("he_4_"+str(t), cs4)
-                    feature.SetField("STH_4_"+str(t), cs2+cs3+cs4)
+                    feature.SetField("noyear"+str(t), cs1)
+                    feature.SetField("lightyear"+str(t), cs2)
+                    feature.SetField("moderyear"+str(t), cs3)
+                    feature.SetField("highyear"+str(t), cs4)
+                    feature.SetField("STHyear"+str(t), cs2+cs3+cs4)
 
 
 
@@ -228,16 +220,16 @@ def run(parameterContainer):
 
             for t in range(time):
                 if t==0:
-                    STH_m4=feature.GetField("STH_m4")
-                    cs1=model4no(float(STH_m4))
-                    cs2=model4light(float(STH_m4))
-                    cs3=model4moderate(float(STH_m4))
-                    cs4=model4high(float(STH_m4))
-                    feature.SetField("no_4_"+str(t), cs1)
-                    feature.SetField("li_4_"+str(t), cs2)
-                    feature.SetField("mo_4_"+str(t), cs3)
-                    feature.SetField("he_4_"+str(t), cs4)
-                    feature.SetField("STH_4_"+str(t), cs2+cs3+cs4)
+                    STH=feature.GetField("STH")
+                    cs1=model4no(float(STH))
+                    cs2=model4light(float(STH))
+                    cs3=model4moderate(float(STH))
+                    cs4=model4high(float(STH))
+                    feature.SetField("noyear"+str(t), cs1)
+                    feature.SetField("lightyear"+str(t), cs2)
+                    feature.SetField("moderyear"+str(t), cs3)
+                    feature.SetField("highyear"+str(t), cs4)
+                    feature.SetField("STHyear"+str(t), cs2+cs3+cs4)
                     cs=np.array([cs1,cs2,cs3,cs4])
 
 
@@ -255,12 +247,11 @@ def run(parameterContainer):
                     cs3=value[t][2]
                     cs4=value[t][3]
 
-                    feature.SetField("no_4_"+str(t), cs1)
-                    feature.SetField("li_4_"+str(t), cs2)
-                    feature.SetField("mo_4_"+str(t), cs3)
-                    feature.SetField("he_4_"+str(t), cs4)
-                    feature.SetField("STH_4_"+str(t), cs2+cs3+cs4)
-
+                    feature.SetField("noyear"+str(t), cs1)
+                    feature.SetField("lightyear"+str(t), cs2)
+                    feature.SetField("moderyear"+str(t), cs3)
+                    feature.SetField("highyear"+str(t), cs4)
+                    feature.SetField("STHyear"+str(t), cs2+cs3+cs4)
 
 
 
@@ -269,16 +260,16 @@ def run(parameterContainer):
 
             for t in range(time):
                 if t==0:
-                    STH_m4=feature.GetField("STH_m4")
-                    cs1=model4no(float(STH_m4))
-                    cs2=model4light(float(STH_m4))
-                    cs3=model4moderate(float(STH_m4))
-                    cs4=model4high(float(STH_m4))
-                    feature.SetField("no_4_"+str(t), cs1)
-                    feature.SetField("li_4_"+str(t), cs2)
-                    feature.SetField("mo_4_"+str(t), cs3)
-                    feature.SetField("he_4_"+str(t), cs4)
-                    feature.SetField("STH_4_"+str(t), cs2+cs3+cs4)
+                    STH=feature.GetField("STH")
+                    cs1=model4no(float(STH))
+                    cs2=model4light(float(STH))
+                    cs3=model4moderate(float(STH))
+                    cs4=model4high(float(STH))
+                    feature.SetField("noyear"+str(t), cs1)
+                    feature.SetField("lightyear"+str(t), cs2)
+                    feature.SetField("moderyear"+str(t), cs3)
+                    feature.SetField("highyear"+str(t), cs4)
+                    feature.SetField("STHyear"+str(t), cs2+cs3+cs4)
                     cs=np.array([cs1,cs2,cs3,cs4])
 
 
@@ -296,11 +287,11 @@ def run(parameterContainer):
                     cs3=value[t][2]
                     cs4=value[t][3]
 
-                    feature.SetField("no_4_"+str(t), cs1)
-                    feature.SetField("li_4_"+str(t), cs2)
-                    feature.SetField("mo_4_"+str(t), cs3)
-                    feature.SetField("he_4_"+str(t), cs4)
-                    feature.SetField("STH_4_"+str(t), cs2+cs3+cs4)
+                    feature.SetField("noyear"+str(t), cs1)
+                    feature.SetField("lightyear"+str(t), cs2)
+                    feature.SetField("moderyear"+str(t), cs3)
+                    feature.SetField("highyear"+str(t), cs4)
+                    feature.SetField("STHyear"+str(t), cs2+cs3+cs4)
 
 
 
@@ -309,16 +300,16 @@ def run(parameterContainer):
 
             for t in range(time):
                 if t==0:
-                    STH_m4=feature.GetField("STH_m4")
-                    cs1=model4no(float(STH_m4))
-                    cs2=model4light(float(STH_m4))
-                    cs3=model4moderate(float(STH_m4))
-                    cs4=model4high(float(STH_m4))
-                    feature.SetField("no_4_"+str(t), cs1)
-                    feature.SetField("li_4_"+str(t), cs2)
-                    feature.SetField("mo_4_"+str(t), cs3)
-                    feature.SetField("he_4_"+str(t), cs4)
-                    feature.SetField("STH_4_"+str(t), cs2+cs3+cs4)
+                    STH=feature.GetField("STH")
+                    cs1=model4no(float(STH))
+                    cs2=model4light(float(STH))
+                    cs3=model4moderate(float(STH))
+                    cs4=model4high(float(STH))
+                    feature.SetField("noyear"+str(t), cs1)
+                    feature.SetField("lightyear"+str(t), cs2)
+                    feature.SetField("moderyear"+str(t), cs3)
+                    feature.SetField("highyear"+str(t), cs4)
+                    feature.SetField("STHyear"+str(t), cs2+cs3+cs4)
                     cs=np.array([cs1,cs2,cs3,cs4])
 
 
@@ -336,12 +327,11 @@ def run(parameterContainer):
                     cs3=value[t][2]
                     cs4=value[t][3]
 
-                    feature.SetField("no_4_"+str(t), cs1)
-                    feature.SetField("li_4_"+str(t), cs2)
-                    feature.SetField("mo_4_"+str(t), cs3)
-                    feature.SetField("he_4_"+str(t), cs4)
-                    feature.SetField("STH_4_"+str(t), cs2+cs3+cs4)
-
+                    feature.SetField("noyear"+str(t), cs1)
+                    feature.SetField("lightyear"+str(t), cs2)
+                    feature.SetField("moderyear"+str(t), cs3)
+                    feature.SetField("highyear"+str(t), cs4)
+                    feature.SetField("STHyear"+str(t), cs2+cs3+cs4)
 
         layer.SetFeature(feature)
         feature.Destroy()

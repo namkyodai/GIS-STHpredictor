@@ -275,4 +275,29 @@ mtp_cp10=np.array([[mtp_cp10[0][0],mtp_cp10[0][1],mtp_cp10[0][2],mtp_cp10[0][3]]
               [mtp_cp10[2][0],mtp_cp10[2][1],mtp_cp10[2][2],mtp_cp10[2][3]],
               [mtp_cp10[3][0],mtp_cp10[3][1],mtp_cp10[3][2],mtp_cp10[3][3]]])
 			  
-			  			  			  			  			  			  
+mtp_cpdn = [[0 for i in range(4)] for j in range(4)] #the transition probabilities for model 4
+
+mtp_cpdn[0][0]=1
+mtp_cpdn[0][1]=0
+mtp_cpdn[0][2]=0
+mtp_cpdn[0][3]=0
+
+mtp_cpdn[1][0]=0
+mtp_cpdn[1][1]=1
+mtp_cpdn[1][2]=0
+mtp_cpdn[1][3]=0
+
+mtp_cpdn[2][0]=0
+mtp_cpdn[2][1]=0
+mtp_cpdn[2][2]=1
+mtp_cpdn[2][3]=0
+
+mtp_cpdn[3][0]=0
+mtp_cpdn[3][1]=0
+mtp_cpdn[3][2]=0
+mtp_cpdn[3][3]=1
+
+mtp_cpdn=np.array([[mtp_cpdn[0][0],mtp_cpdn[0][1],mtp_cpdn[0][2],mtp_cpdn[0][3]],
+              [mtp_cpdn[1][0],mtp_cpdn[1][1],mtp_cpdn[1][2],mtp_cpdn[1][3]],
+              [mtp_cpdn[2][0],mtp_cpdn[2][1],mtp_cpdn[2][2],mtp_cpdn[2][3]],
+              [mtp_cpdn[3][0],mtp_cpdn[3][1],mtp_cpdn[3][2],mtp_cpdn[3][3]]])
