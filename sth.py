@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- STH
+ GIS-STH-Predictor
+ This program was designed and coded by Nam Lethanh, with supports of a Phd Student Magnus Heitzler @ ETHZ, Zürich
                                  A QGIS plugin
  STH predictor
                               -------------------
         begin                : 2014-05-07
-        copyright            : (C) 2015 by Nam Lethanh
+        end		     : January, 2016
+        copyright            : (C) 2016 by Nam Lethanh
         email                : namkyodai@gmail.com
  ***************************************************************************/
 
